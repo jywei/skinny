@@ -35,6 +35,7 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'debugger', group: [:development, :test]
+# gem 'debugger', group: [:development, :test]
+gem 'pry-byebug', group: [:development, :test]
 gem 'rspec-rails', group: [:development, :test]
 gem 'factory_girl_rails', group: :test

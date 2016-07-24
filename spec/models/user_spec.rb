@@ -1,10 +1,20 @@
 require 'spec_helper'
 
-describe 'user accounts' do
+describe User do
+  subject(:user) { User.new(firstname: "Jimmy",
+                    lastname: "Johnny",
+                    password: "12345678",
+                    password_confirmation: "12345678") }
+
+  # it "should have a firstname" do
+  #   expect(user.firstname).to be_a_kind_of String
+  # end
+
   describe "the length of the firstname" do
 
     it "should not be super long" do
       user = User.new(firstname: "really really really really super super super long firstname that is crazy long")
+      # user = User.new(firstname: "really")
       user.valid?.should_not == true
     end
 
