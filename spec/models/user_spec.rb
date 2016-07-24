@@ -1,31 +1,54 @@
 require 'spec_helper'
 
 describe User do
-  subject(:user) { User.new(firstname: "Jimmy",
-                    lastname: "Johnny",
-                    password: "12345678",
-                    password_confirmation: "12345678") }
+  subject(:user) { User.new(firstname: firstname,
+                    lastname: lastname,
+                    email: email,
+                    password: password,
+                    password_confirmation: password_confirmation) }
 
-  # it "should have a firstname" do
-  #   expect(user.firstname).to be_a_kind_of String
-  # end
+  let(:firstname) { "Jimmy" }
+  let(:lastname) { "Johnny" }
+  let(:email) { "jimmyjohnny@example.com" }
+  let(:password) { "12345678" }
+  let(:password_confirmation) { "12345678" }
 
-  describe "the length of the firstname" do
+  it { expect(user).to be_valid }
 
-    it "should not be super long" do
-      user = User.new(firstname: "really really really really super super super long firstname that is crazy long")
-      # user = User.new(firstname: "really")
-      user.valid?.should_not == true
+  # describe "the length of the firstname" do
+  describe "#firstname" do
+
+    # before do
+    #   user.firstname = "really really really really super super super long firstname that is crazy long"
+    # end
+
+    context "when too long" do
+      let(:firstname) { "really really really really super super super long firstname that is crazy long" }
+
+      # it "should not be super long" do
+      #   expect(user).to be_invalid
+      # end
+
+      it { expect(user).to be_invalid }
     end
 
-    it "should not be super short" do
-      user = User.new(firstname: "sht")
-      user.valid?.should_not == true
+    context "when too short" do
+      let(:firstname) { "s" }
+
+      it { expect(user).to be_invalid }
     end
 
-    it "exists" do
-      user = User.new(firstname: "")
-      user.valid?.should_not == true
+    context "when it include the last name" do
+      let(:firstname) { "Jimmy" }
+      let(:lastname) { "Jimmy" }
+
+      it { expect(user).to be_invalid }
+    end
+
+    context "when it is not present" do
+      let(:firstname) { "" }
+
+      it { expect(user).to be_invalid }
     end
 
     it "shouldn't have weird characters" do
