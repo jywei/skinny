@@ -2,12 +2,14 @@ require 'spec_helper'
 
 describe User do
   subject(:user) { User.new(firstname: firstname,
-                    lastname: lastname,
-                    email: email,
-                    password: password,
-                    password_confirmation: password_confirmation) }
+                            middlename: middlename,
+                            lastname: lastname,
+                            email: email,
+                            password: password,
+                            password_confirmation: password_confirmation) }
 
   let(:firstname) { "Jimmy" }
+  let(:middlename) { nil }
   let(:lastname) { "Johnny" }
   let(:email) { "jimmyjohnny@example.com" }
   let(:password) { "12345678" }
@@ -15,8 +17,34 @@ describe User do
 
   it { expect(user).to be_valid }
 
+  describe "#fullname" do
+    context "when firstname, middlename, and lastname exist" do
+      let(:middlename) { "Sammy" }
+      let(:fullname) { "#{firstname} #{middlename} #{lastname}" }
+
+      # before do
+      #   user.middlename = middlename
+      # end
+
+      # before do
+      #   user.firstname = firstname
+      #   user.lastname = lastname
+      #   user.middlename = middlename
+      # end
+
+      it "concats all names into a single string" do
+        expect(user.fullname).to eq(fullname)
+      end
+    end
+  end
+
   # describe "the length of the firstname" do
   describe "#firstname" do
+
+    shared_examples_for "an invalid user" do
+      it { expect(subject).to be_invalid }
+      it { expect(subject.errors).to be_present }
+    end
 
     # before do
     #   user.firstname = "really really really really super super super long firstname that is crazy long"
@@ -29,26 +57,26 @@ describe User do
       #   expect(user).to be_invalid
       # end
 
-      it { expect(user).to be_invalid }
+      it_should_behave_like "an invalid user"
     end
 
     context "when too short" do
       let(:firstname) { "s" }
 
-      it { expect(user).to be_invalid }
+      it_should_behave_like "an invalid user"
     end
 
     context "when it include the last name" do
       let(:firstname) { "Jimmy" }
       let(:lastname) { "Jimmy" }
 
-      it { expect(user).to be_invalid }
+      it_should_behave_like "an invalid user"
     end
 
     context "when it is not present" do
       let(:firstname) { "" }
 
-      it { expect(user).to be_invalid }
+      it_should_behave_like "an invalid user"
     end
 
     it "shouldn't have weird characters" do
