@@ -64,6 +64,13 @@ describe User do
     it_behaves_like "a fullname with", [:firstname, :lastname]
     it_behaves_like "a fullname with", [:firstname, :lastname, :suffix]
     it_behaves_like "a fullname with", [:firstname, :middlename, :lastname, :suffix]
+
+    it_behaves_like "a fullname with" do
+      let(:firstname) { "John" }
+      let(:middlename) { "jim" }
+      let(:lastname)  { "smith" }
+    end
+
   end
 
   describe "permissions" do

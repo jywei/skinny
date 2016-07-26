@@ -41,10 +41,10 @@ describe User do
   # describe "the length of the firstname" do
   describe "#firstname" do
 
-    shared_examples_for "an invalid user" do
-      it { expect(subject).to be_invalid }
-      it { expect(subject.errors).to be_present }
-    end
+    # shared_examples_for "an invalid object" do
+    #   it { expect(subject).to be_invalid }
+    #   it { expect(subject.errors).to be_present }
+    # end
 
     # before do
     #   user.firstname = "really really really really super super super long firstname that is crazy long"
@@ -57,26 +57,26 @@ describe User do
       #   expect(user).to be_invalid
       # end
 
-      it_should_behave_like "an invalid user"
+      it_should_behave_like "an invalid object"
     end
 
     context "when too short" do
       let(:firstname) { "s" }
 
-      it_should_behave_like "an invalid user"
+      it_should_behave_like "an invalid object"
     end
 
     context "when it include the last name" do
       let(:firstname) { "Jimmy" }
       let(:lastname) { "Jimmy" }
 
-      it_should_behave_like "an invalid user"
+      it_should_behave_like "an invalid object"
     end
 
     context "when it is not present" do
       let(:firstname) { "" }
 
-      it_should_behave_like "an invalid user"
+      it_should_behave_like "an invalid object"
     end
 
     it "shouldn't have weird characters" do
